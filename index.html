@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Explorer | Knapsack Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top-header">
+    <div>
+        <p class="eyebrow">ALGORITHM LAB / 01</p>
+        <h1>Algorithm Explorer</h1>
+        <p>Interactive 0/1 Knapsack Algorithm Simulator</p>
+    </div>
+    <div class="header-tag">LEARN • SIMULATE • COMPARE</div>
+</header>
+
+<main class="container">
+
+    <section class="welcome-section">
+        <p class="eyebrow">WELCOME TO THE LAB</p>
+        <h2>Think. Select. Optimize.</h2>
+        <p>
+            Explore how four different algorithms solve the
+            0/1 Knapsack Problem. Test your own items, follow
+            algorithm decisions and compare the results.
+        </p>
+    </section>
+
+    <section class="input-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">01 / INPUT</p>
+                <h2>Build Your Packing Problem</h2>
+            </div>
+            <span class="section-number">01</span>
+        </div>
+
+        <label for="capacity">Bag Capacity (kg)</label>
+        <input
+            type="number"
+            id="capacity"
+            min="1"
+            step="1"
+            placeholder="Enter maximum capacity"
+        >
+
+        <div class="items-heading">
+            <h3>Your Items</h3>
+            <span id="item-count">0 items</span>
+        </div>
+
+        <div class="item-labels">
+            <span>Item Name</span>
+            <span>Weight (kg)</span>
+            <span>Value</span>
+            <span>Action</span>
+        </div>
+
+        <div id="items-container"></div>
+
+        <button class="secondary-btn" type="button" onclick="addItem()">
+            + Add Another Item
+        </button>
+
+        <div class="form-actions">
+            <button class="primary-btn" onclick="solveProblem()">
+                Run All Algorithms
+            </button>
+            <button class="reset-btn" onclick="resetKnapsack()">
+                Reset Inputs
+            </button>
+        </div>
+
+        <p id="message" role="status"></p>
+    </section>
+
+    <section class="algorithm-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">02 / ALGORITHMS</p>
+                <h2>Choose Your Approach</h2>
+            </div>
+            <span class="section-number">02</span>
+        </div>
+
+        <p>Run one algorithm or compare all four together.</p>
+
+        <div class="algorithm-grid">
+            <button onclick="runAlgorithm('brute')" class="algorithm-card">
+                <span class="algorithm-icon">01</span>
+                <strong>Brute Force</strong>
+                <small>Checks every combination</small>
+            </button>
+
+            <button onclick="runAlgorithm('greedy')" class="algorithm-card">
+                <span class="algorithm-icon">02</span>
+                <strong>Greedy Algorithm</strong>
+                <small>Chooses the best ratio first</small>
+            </button>
+
+            <button onclick="runAlgorithm('dynamic')" class="algorithm-card">
+                <span class="algorithm-icon">03</span>
+                <strong>Dynamic Programming</strong>
+                <small>Stores smaller solutions</small>
+            </button>
+
+            <button onclick="runAlgorithm('backtracking')" class="algorithm-card">
+                <span class="algorithm-icon">04</span>
+                <strong>Backtracking</strong>
+                <small>Explores and prunes choices</small>
+            </button>
+        </div>
+    </section>
+
+    <section class="champion-section">
+        <p class="eyebrow">03 / WINNER ANALYSIS</p>
+        <h2>Algorithm Champion</h2>
+        <div id="champion">
+            Run the algorithms to discover the champion.
+        </div>
+    </section>
+
+    <section class="results-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">04 / RESULTS</p>
+                <h2>Solution Report</h2>
+            </div>
+        </div>
+
+        <div id="output">
+            Your selected items and results will appear here.
+        </div>
+
+        <h3>Capacity Utilization</h3>
+        <div id="capacity-info">
+            Enter your packing details to see capacity usage.
+        </div>
+
+        <div class="progress-track">
+            <div id="capacity-bar"></div>
+        </div>
+    </section>
+
+    <section class="simulation-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">05 / INTERACTIVE LEARNING</p>
+                <h2>Step-by-Step Simulation</h2>
+            </div>
+        </div>
+
+        <p id="step-counter">No simulation available yet.</p>
+
+        <div id="simulation-step">
+            Select an algorithm to begin the simulation.
+        </div>
+
+        <div class="simulation-controls">
+            <button class="secondary-btn" onclick="previousStep()">
+                ← Previous Step
+            </button>
+            <button class="primary-btn" onclick="nextStep()">
+                Next Step →
+            </button>
+        </div>
+    </section>
+
+    <section class="tree-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">06 / DECISION VISUALIZATION</p>
+                <h2>Algorithm Decision Tree</h2>
+            </div>
+        </div>
+
+        <p>
+            Explore the include and exclude decisions made by
+            Brute Force or Backtracking.
+        </p>
+
+        <div id="decision-tree">
+            Run Brute Force or Backtracking to view its decision tree.
+        </div>
+    </section>
+
+    <section class="comparison-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">07 / PERFORMANCE</p>
+                <h2>Algorithm Comparison</h2>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Time Complexity</th>
+                        <th>Space Complexity</th>
+                        <th>Maximum Value</th>
+                        <th>Time (ms)</th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-body">
+                    <tr>
+                        <td colspan="5">Run algorithms to see comparison.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Execution Time Chart</h3>
+        <canvas id="performance-chart"></canvas>
+    </section>
+
+    <section class="history-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">08 / EXPERIMENTS</p>
+                <h2>Experiment History</h2>
+            </div>
+            <button class="reset-btn" onclick="clearHistory()">
+                Clear History
+            </button>
+        </div>
+
+        <div id="history-list">
+            No saved experiments yet.
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>ALGORITHM EXPLORER • 0/1 KNAPSACK SIMULATOR</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
